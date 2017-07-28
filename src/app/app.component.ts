@@ -1,88 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Hero } from './hero';
-import { HeroService } from './hero.service';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  // templateUrl: './app.component.html',
-  template: `
-  <h1>{{title}}</h1>
-  <h2>我的英雄</h2>
-  <ul class="heroes">
-    <li *ngFor='let hero of heroes' [class.selected]='hero===selectedHero' (click)='onSelect(hero)'>
-      <span class='badge'>{{hero.id}}</span>{{hero.name}}
-    </li>
-  </ul>
-  <hero-detail [hero]="selectedHero"></hero-detail>
-  `,
-  // styleUrls: ['./app.component.css']
-  styles: [`
-  .selected {
-    background-color: #CFD8DC !important;
-    color: white;
-  }
-  .heroes {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 15em;
-  }
-  .heroes li {
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    background-color: #EEE;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.6em;
-    border-radius: 4px;
-  }
-  .heroes li.selected:hover {
-    background-color: #BBD8DC !important;
-    color: white;
-  }
-  .heroes li:hover {
-    color: #607D8B;
-    background-color: #DDD;
-    left: .1em;
-  }
-  .heroes .text {
-    position: relative;
-    top: -3px;
-  }
-  .heroes .badge {
-    display: inline-block;
-    font-size: small;
-    color: white;
-    padding: 0.8em 0.7em 0 0.7em;
-    background-color: #607D8B;
-    line-height: 1em;
-    position: relative;
-    left: -1px;
-    top: -4px;
-    height: 1.8em;
-    margin-right: .8em;
-    border-radius: 4px 0 0 4px;
-  }
-`],
-  providers: [HeroService]
+    selector: 'app-root',
+    template: `
+    <h1>{{title}}</h1>
+    <nav>
+        <a routerLink="/dashboard">仪表板</a>
+        <a routerLink="/heroes">英雄列表</a>
+    </nav>
+    <router-outlet></router-outlet>
+    `
+    // RouterOutlet是由RouterModule提供的指令之一。 当我们在应用中导航时，路由器就把激活的组件显示在<router-outlet>里面。
 })
-export class AppComponent implements OnInit {
-  title = '英雄之旅';
-  selectedHero: Hero;
-  heroes: Hero[];
-
-  constructor(private heroService: HeroService) {
-  }
-  getHeroes(): void {
-    this.heroService.getHeroesSlowly().then(h => this.heroes = h);
-  }
-
-  ngOnInit(): void {
-    this.getHeroes();
-  }
-
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
+export class AppComponent {
+    title = '英雄之旅';
 }
