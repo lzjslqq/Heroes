@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
+// import { HEROES } from './mock-heroes';
 
 @Injectable()
 export class HeroService {
@@ -28,8 +28,13 @@ export class HeroService {
     }
 
     getHero(id: number): Promise<Hero> {
-        return this.getHeroes()
-            .then(heroes => heroes.find(hero => hero.id === id));
+        const url = `${this.heroesUrl}/${id}`;
+        // return this.getHeroes()
+        //     .then(heroes => heroes.find(hero => hero.id === id));
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json().data as Hero)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
